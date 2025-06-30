@@ -1,0 +1,10 @@
+langchain>=0.1.0
+langchain-openai>=0.1.0
+langchain-google-genai>=1.0.0
+langchain-experimental>=0.0.50
+langchain-community>=0.0.29
+neo4j>=5.0.0
+jupyterlab>=4.0.0
+json-repair>=0.10.0
+getpass4>=0.0.14
+python-dotenv>=1.0.0
