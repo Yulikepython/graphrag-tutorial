@@ -8,6 +8,16 @@ case "$1" in
         docker run -d --name memgraph -p 7687:7687 -p 7444:7444 -p 3000:3000 memgraph/memgraph-platform
         echo "✅ Memgraph started!"
         echo "📊 Memgraph Lab: http://localhost:3000"
+        echo "⚠️  Warning: Data will be lost when container is removed"
+        ;;
+    start-persistent)
+        echo "🐳 Starting Memgraph with persistent data..."
+        docker run -d --name memgraph -p 7687:7687 -p 7444:7444 -p 3000:3000 \
+          -v memgraph_data:/var/lib/memgraph \
+          memgraph/memgraph-platform
+        echo "✅ Memgraph started with persistent storage!"
+        echo "📊 Memgraph Lab: http://localhost:3000"
+        echo "💾 Data will be preserved across container restarts"
         ;;
     stop)
         echo "🛑 Stopping Memgraph..."
@@ -37,14 +47,15 @@ case "$1" in
         docker logs memgraph
         ;;
     *)
-        echo "Usage: $0 {start|stop|restart|status|logs}"
+        echo "Usage: $0 {start|start-persistent|stop|restart|status|logs}"
         echo ""
         echo "Commands:"
-        echo "  start   - Start Memgraph container"
-        echo "  stop    - Stop and remove Memgraph container"
-        echo "  restart - Restart Memgraph container"
-        echo "  status  - Check if Memgraph is running"
-        echo "  logs    - Show Memgraph logs"
+        echo "  start            - Start Memgraph container (data will be lost on restart)"
+        echo "  start-persistent - Start Memgraph with persistent data storage"
+        echo "  stop             - Stop and remove Memgraph container"
+        echo "  restart          - Restart Memgraph container"
+        echo "  status           - Check if Memgraph is running"
+        echo "  logs             - Show Memgraph logs"
         exit 1
         ;;
 esac
